@@ -1,12 +1,21 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { useCart } from '@/context/CartContext';
-import { medicines, labTests, doctors } from '@/data/products';
+import { medicines, labTests, doctors, babyCare, womenCare } from '@/data/products';
 import { toast } from 'sonner';
-import { Pill, Microscope, Stethoscope, Star, Clock, Award } from 'lucide-react';
+import { Pill, Microscope, Stethoscope, Star, Clock, Award, Baby, Heart, Search, SlidersHorizontal } from 'lucide-react';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import {
   Dialog,
   DialogContent,
@@ -14,8 +23,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 
 const Services = () => {
   const { addToCart, addAppointment, addHomeTest } = useCart();
@@ -23,6 +30,9 @@ const Services = () => {
   const [testDialog, setTestDialog] = useState(false);
   const [selectedDoctor, setSelectedDoctor] = useState<typeof doctors[0] | null>(null);
   const [selectedTest, setSelectedTest] = useState<typeof labTests[0] | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [sortBy, setSortBy] = useState('name');
+  const [priceFilter, setPriceFilter] = useState('all');
 
   const handleAddToCart = (item: typeof medicines[0]) => {
     addToCart({
@@ -74,6 +84,32 @@ const Services = () => {
     setTestDialog(false);
   };
 
+  // Filter and sort logic
+  const filterAndSort = (items: any[]) => {
+    let filtered = items.filter(item =>
+      item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (item.description && item.description.toLowerCase().includes(searchQuery.toLowerCase()))
+    );
+
+    if (priceFilter !== 'all') {
+      if (priceFilter === 'low') filtered = filtered.filter(item => (item.price || item.fee) < 300);
+      if (priceFilter === 'medium') filtered = filtered.filter(item => (item.price || item.fee) >= 300 && (item.price || item.fee) < 700);
+      if (priceFilter === 'high') filtered = filtered.filter(item => (item.price || item.fee) >= 700);
+    }
+
+    if (sortBy === 'price-low') filtered.sort((a, b) => (a.price || a.fee) - (b.price || b.fee));
+    if (sortBy === 'price-high') filtered.sort((a, b) => (b.price || b.fee) - (a.price || a.fee));
+    if (sortBy === 'name') filtered.sort((a, b) => a.name.localeCompare(b.name));
+
+    return filtered;
+  };
+
+  const filteredMedicines = useMemo(() => filterAndSort(medicines), [searchQuery, sortBy, priceFilter]);
+  const filteredBabyCare = useMemo(() => filterAndSort(babyCare), [searchQuery, sortBy, priceFilter]);
+  const filteredWomenCare = useMemo(() => filterAndSort(womenCare), [searchQuery, sortBy, priceFilter]);
+  const filteredLabTests = useMemo(() => filterAndSort(labTests), [searchQuery, sortBy, priceFilter]);
+  const filteredDoctors = useMemo(() => filterAndSort(doctors), [searchQuery, sortBy, priceFilter]);
+
   return (
     <div className="min-h-screen">
       {/* Hero */}
@@ -83,33 +119,83 @@ const Services = () => {
             Our <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Services</span>
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Comprehensive healthcare solutions at your fingertips
+            10-15 min instant delivery • Complete healthcare solutions at your fingertips
           </p>
         </div>
       </section>
 
+      {/* Search and Filters */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div className="flex flex-col md:flex-row gap-4 items-center justify-between bg-white p-4 rounded-xl shadow-sm border">
+          <div className="relative flex-1 w-full">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              placeholder="Search medicines, tests, doctors..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-10"
+            />
+          </div>
+          <div className="flex gap-2 w-full md:w-auto">
+            <Select value={sortBy} onValueChange={setSortBy}>
+              <SelectTrigger className="w-full md:w-[180px]">
+                <SlidersHorizontal className="h-4 w-4 mr-2" />
+                <SelectValue placeholder="Sort by" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="name">Name (A-Z)</SelectItem>
+                <SelectItem value="price-low">Price: Low to High</SelectItem>
+                <SelectItem value="price-high">Price: High to Low</SelectItem>
+              </SelectContent>
+            </Select>
+            <Select value={priceFilter} onValueChange={setPriceFilter}>
+              <SelectTrigger className="w-full md:w-[150px]">
+                <SelectValue placeholder="Price" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Prices</SelectItem>
+                <SelectItem value="low">Under ₹300</SelectItem>
+                <SelectItem value="medium">₹300 - ₹700</SelectItem>
+                <SelectItem value="high">Above ₹700</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+      </section>
+
       {/* Services Tabs */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <Tabs defaultValue="medicines" className="space-y-8">
-          <TabsList className="grid w-full max-w-md mx-auto grid-cols-3 h-auto">
-            <TabsTrigger value="medicines" className="gap-2">
-              <Pill className="h-4 w-4" />
-              <span className="hidden sm:inline">Medicines</span>
+          <TabsList className="grid w-full max-w-3xl mx-auto grid-cols-5 h-auto">
+            <TabsTrigger value="medicines" className="gap-2 flex-col py-3">
+              <Pill className="h-5 w-5" />
+              <span className="text-xs">Medicines</span>
             </TabsTrigger>
-            <TabsTrigger value="tests" className="gap-2">
-              <Microscope className="h-4 w-4" />
-              <span className="hidden sm:inline">Lab Tests</span>
+            <TabsTrigger value="babycare" className="gap-2 flex-col py-3">
+              <Baby className="h-5 w-5" />
+              <span className="text-xs">Baby Care</span>
             </TabsTrigger>
-            <TabsTrigger value="doctors" className="gap-2">
-              <Stethoscope className="h-4 w-4" />
-              <span className="hidden sm:inline">Doctors</span>
+            <TabsTrigger value="womencare" className="gap-2 flex-col py-3">
+              <Heart className="h-5 w-5" />
+              <span className="text-xs">Women Care</span>
+            </TabsTrigger>
+            <TabsTrigger value="tests" className="gap-2 flex-col py-3">
+              <Microscope className="h-5 w-5" />
+              <span className="text-xs">Lab Tests</span>
+            </TabsTrigger>
+            <TabsTrigger value="doctors" className="gap-2 flex-col py-3">
+              <Stethoscope className="h-5 w-5" />
+              <span className="text-xs">Doctors</span>
             </TabsTrigger>
           </TabsList>
 
           {/* Medicines */}
           <TabsContent value="medicines" className="space-y-6">
+            <div className="text-sm text-muted-foreground mb-4">
+              Showing {filteredMedicines.length} of {medicines.length} results
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {medicines.map((med) => (
+              {filteredMedicines.map((med) => (
                 <Card key={med.id} className="overflow-hidden hover:shadow-card transition-all group">
                   <div className="aspect-square overflow-hidden">
                     <img
@@ -140,10 +226,77 @@ const Services = () => {
             </div>
           </TabsContent>
 
+          {/* Baby Care */}
+          <TabsContent value="babycare" className="space-y-6">
+            <div className="text-sm text-muted-foreground mb-4">
+              Showing {filteredBabyCare.length} of {babyCare.length} results
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {filteredBabyCare.map((item) => (
+                <Card key={item.id} className="overflow-hidden hover:shadow-card transition-all group">
+                  <div className="aspect-square overflow-hidden">
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
+                  <div className="p-4 space-y-3">
+                    <div>
+                      <h3 className="font-semibold line-clamp-1">{item.name}</h3>
+                      <p className="text-sm text-muted-foreground line-clamp-2 mt-1">{item.description}</p>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <div className="text-lg font-bold text-primary">₹{item.price}</div>
+                      <Button size="sm" onClick={() => handleAddToCart(item)}>
+                        Add to Cart
+                      </Button>
+                    </div>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          </TabsContent>
+
+          {/* Women Care */}
+          <TabsContent value="womencare" className="space-y-6">
+            <div className="text-sm text-muted-foreground mb-4">
+              Showing {filteredWomenCare.length} of {womenCare.length} results
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {filteredWomenCare.map((item) => (
+                <Card key={item.id} className="overflow-hidden hover:shadow-card transition-all group">
+                  <div className="aspect-square overflow-hidden">
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
+                  <div className="p-4 space-y-3">
+                    <div>
+                      <h3 className="font-semibold line-clamp-1">{item.name}</h3>
+                      <p className="text-sm text-muted-foreground line-clamp-2 mt-1">{item.description}</p>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <div className="text-lg font-bold text-primary">₹{item.price}</div>
+                      <Button size="sm" onClick={() => handleAddToCart(item)}>
+                        Add to Cart
+                      </Button>
+                    </div>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          </TabsContent>
+
           {/* Lab Tests */}
           <TabsContent value="tests" className="space-y-6">
+            <div className="text-sm text-muted-foreground mb-4">
+              Showing {filteredLabTests.length} of {labTests.length} results
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {labTests.map((test) => (
+              {filteredLabTests.map((test) => (
                 <Card key={test.id} className="overflow-hidden hover:shadow-card transition-all group">
                   <div className="aspect-square overflow-hidden">
                     <img
@@ -181,8 +334,11 @@ const Services = () => {
 
           {/* Doctors */}
           <TabsContent value="doctors" className="space-y-6">
+            <div className="text-sm text-muted-foreground mb-4">
+              Showing {filteredDoctors.length} of {doctors.length} results
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {doctors.map((doc) => (
+              {filteredDoctors.map((doc) => (
                 <Card key={doc.id} className="overflow-hidden hover:shadow-card transition-all group">
                   <div className="aspect-square overflow-hidden">
                     <img

@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Separator } from '@/components/ui/separator';
-import { Minus, Plus, Trash2, ShoppingBag, CreditCard, Smartphone, Wallet } from 'lucide-react';
+import { Minus, Plus, Trash2, ShoppingBag, CreditCard, Smartphone, Wallet, Banknote, Building2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
 
@@ -130,25 +130,39 @@ const Cart = () => {
                   <div>
                     <Label>Payment Method</Label>
                     <RadioGroup value={paymentMethod} onValueChange={setPaymentMethod} className="mt-2 space-y-2">
-                      <div className="flex items-center space-x-2 p-3 border rounded-lg">
+                      <div className="flex items-center space-x-2 p-3 border rounded-lg hover:border-primary transition-colors">
                         <RadioGroupItem value="razorpay" id="razorpay" />
                         <Label htmlFor="razorpay" className="flex items-center gap-2 cursor-pointer flex-1">
-                          <CreditCard className="h-4 w-4" />
-                          Razorpay (Demo)
+                          <CreditCard className="h-4 w-4 text-primary" />
+                          <span>Razorpay</span>
                         </Label>
                       </div>
-                      <div className="flex items-center space-x-2 p-3 border rounded-lg">
+                      <div className="flex items-center space-x-2 p-3 border rounded-lg hover:border-primary transition-colors">
+                        <RadioGroupItem value="paypal" id="paypal" />
+                        <Label htmlFor="paypal" className="flex items-center gap-2 cursor-pointer flex-1">
+                          <Building2 className="h-4 w-4 text-primary" />
+                          <span>PayPal</span>
+                        </Label>
+                      </div>
+                      <div className="flex items-center space-x-2 p-3 border rounded-lg hover:border-primary transition-colors">
                         <RadioGroupItem value="upi" id="upi" />
                         <Label htmlFor="upi" className="flex items-center gap-2 cursor-pointer flex-1">
-                          <Smartphone className="h-4 w-4" />
-                          UPI (Demo)
+                          <Smartphone className="h-4 w-4 text-primary" />
+                          <span>UPI (Google Pay, PhonePe, Paytm)</span>
                         </Label>
                       </div>
-                      <div className="flex items-center space-x-2 p-3 border rounded-lg">
+                      <div className="flex items-center space-x-2 p-3 border rounded-lg hover:border-primary transition-colors">
+                        <RadioGroupItem value="cards" id="cards" />
+                        <Label htmlFor="cards" className="flex items-center gap-2 cursor-pointer flex-1">
+                          <CreditCard className="h-4 w-4 text-primary" />
+                          <span>Debit/Credit Cards</span>
+                        </Label>
+                      </div>
+                      <div className="flex items-center space-x-2 p-3 border rounded-lg hover:border-primary transition-colors">
                         <RadioGroupItem value="cod" id="cod" />
                         <Label htmlFor="cod" className="flex items-center gap-2 cursor-pointer flex-1">
-                          <Wallet className="h-4 w-4" />
-                          Cash on Delivery
+                          <Banknote className="h-4 w-4 text-primary" />
+                          <span>Cash on Delivery</span>
                         </Label>
                       </div>
                     </RadioGroup>
