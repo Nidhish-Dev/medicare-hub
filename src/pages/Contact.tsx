@@ -22,13 +22,44 @@ const Contact = () => {
             Get in <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Touch</span>
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Have questions? We're here to help you with all your healthcare needs
+            Serving Delhi NCR with 10-15 min instant delivery • Available 24/7
           </p>
         </div>
       </section>
 
-      {/* Contact Form & Info */}
+      {/* Contact Info Cards - Grid */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+          <Card className="p-6">
+            <MapPin className="h-8 w-8 text-primary mb-4" />
+            <h3 className="font-semibold mb-2">Visit Us</h3>
+            <p className="text-sm text-muted-foreground">
+              MediCare+ Main Branch,<br />
+              Block C-24, Connaught Place,<br />
+              New Delhi, Delhi 110001
+            </p>
+          </Card>
+
+          <Card className="p-6">
+            <Phone className="h-8 w-8 text-primary mb-4" />
+            <h3 className="font-semibold mb-2">Call Us</h3>
+            <p className="text-sm text-muted-foreground">
+              Phone: +91 11 4567 8900<br />
+              Toll Free: 1800-100-5000<br />
+              Available 24/7 for instant delivery
+            </p>
+          </Card>
+
+          <Card className="p-6">
+            <Mail className="h-8 w-8 text-primary mb-4" />
+            <h3 className="font-semibold mb-2">Email Us</h3>
+            <p className="text-sm text-muted-foreground">
+              support@medicareplus.in<br />
+              orders@medicareplus.in<br />
+              We reply within 1 hour
+            </p>
+          </Card>
+        </div>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Contact Info Cards */}
           <div className="space-y-6">
@@ -37,9 +68,9 @@ const Contact = () => {
                 <Phone className="h-6 w-6 text-white" />
               </div>
               <h3 className="font-semibold mb-2">Phone</h3>
-              <p className="text-sm text-muted-foreground">Mon-Sat: 9AM - 9PM</p>
-              <a href="tel:+919876543210" className="text-primary hover:underline mt-2 block">
-                +91 98765 43210
+              <p className="text-sm text-muted-foreground">Mon-Sun: 24/7</p>
+              <a href="tel:+911145678900" className="text-primary hover:underline mt-2 block">
+                +91 11 4567 8900
               </a>
             </Card>
 
@@ -48,9 +79,9 @@ const Contact = () => {
                 <Mail className="h-6 w-6 text-white" />
               </div>
               <h3 className="font-semibold mb-2">Email</h3>
-              <p className="text-sm text-muted-foreground">We'll respond within 24 hours</p>
-              <a href="mailto:hello@medicareplus.com" className="text-primary hover:underline mt-2 block">
-                hello@medicareplus.com
+              <p className="text-sm text-muted-foreground">We'll respond within 1 hour</p>
+              <a href="mailto:support@medicareplus.in" className="text-primary hover:underline mt-2 block">
+                support@medicareplus.in
               </a>
             </Card>
 
@@ -60,8 +91,8 @@ const Contact = () => {
               </div>
               <h3 className="font-semibold mb-2">Visit Us</h3>
               <p className="text-sm text-muted-foreground">
-                12 Health Street<br />
-                Demo City, DC 110001<br />
+                Block C-24, Connaught Place<br />
+                New Delhi, Delhi 110001<br />
                 India
               </p>
             </Card>
@@ -70,11 +101,11 @@ const Contact = () => {
               <div className="w-12 h-12 rounded-xl gradient-primary flex items-center justify-center mb-4">
                 <Clock className="h-6 w-6 text-white" />
               </div>
-              <h3 className="font-semibold mb-2">Working Hours</h3>
+              <h3 className="font-semibold mb-2">Delivery Hours</h3>
               <div className="text-sm text-muted-foreground space-y-1">
-                <p>Monday - Saturday: 9AM - 9PM</p>
-                <p>Sunday: 10AM - 6PM</p>
-                <p className="text-primary font-medium mt-2">24/7 Emergency Support</p>
+                <p>10-15 min instant delivery</p>
+                <p>Available 24/7 across Delhi NCR</p>
+                <p className="text-primary font-medium mt-2">Emergency Support Always Available</p>
               </div>
             </Card>
           </div>
@@ -132,10 +163,10 @@ const Contact = () => {
             {/* Map */}
             <Card className="mt-6 overflow-hidden shadow-card">
               <iframe
-                src="https://maps.google.com/maps?q=New%20Delhi&t=&z=13&ie=UTF8&iwloc=&output=embed"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3501.9750788766817!2d77.21786931508076!3d28.63123989241989!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfd0683d1127d%3A0x3d32e53f2dc0d164!2sConnaught%20Place%2C%20New%20Delhi%2C%20Delhi!5e0!3m2!1sen!2sin!4v1234567890123!5m2!1sen!2sin"
                 className="w-full h-80"
                 loading="lazy"
-                title="Location Map"
+                title="MediCare+ Location - Connaught Place, New Delhi"
               />
             </Card>
           </div>
@@ -154,19 +185,19 @@ const Contact = () => {
             {[
               {
                 q: 'How fast is the delivery?',
-                a: 'We deliver medicines within 2-5 business days depending on your location.',
+                a: 'We deliver medicines in 10-15 minutes across Delhi NCR. Express delivery available 24/7.',
               },
               {
                 q: 'Do you provide home sample collection?',
-                a: 'Yes! We offer convenient home sample collection for all lab tests.',
+                a: 'Yes! We offer convenient home sample collection within 2 hours for all lab tests.',
               },
               {
                 q: 'Are the medicines authentic?',
-                a: '100% authentic medicines sourced directly from verified manufacturers.',
+                a: '100% authentic medicines sourced directly from verified manufacturers with proper certifications.',
               },
               {
                 q: 'Can I upload prescriptions?',
-                a: 'Yes, you can upload prescriptions during checkout for prescription medicines.',
+                a: 'Yes, you can upload prescriptions during checkout for prescription-required medicines.',
               },
             ].map((faq, i) => (
               <Card key={i} className="p-6">

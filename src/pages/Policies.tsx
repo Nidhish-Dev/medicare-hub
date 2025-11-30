@@ -64,16 +64,16 @@ const Policies = () => {
                 <div>
                   <h3 className="font-semibold mb-2">Shipping Partners</h3>
                   <p className="text-muted-foreground">
-                    We partner with trusted courier services including Delhivery, Blue Dart, and India Post to ensure safe and timely delivery of your orders.
+                    We use our own fleet for 10-15 min instant delivery across Delhi NCR. For express orders, we partner with trusted courier services including Delhivery and Blue Dart.
                   </p>
                 </div>
 
                 <div>
                   <h3 className="font-semibold mb-2">Shipping Charges</h3>
                   <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-                    <li>Free shipping on orders above ₹799</li>
-                    <li>₹50 flat shipping for orders below ₹799</li>
-                    <li>Remote area delivery may incur additional charges</li>
+                    <li>Free instant delivery on orders above ₹299</li>
+                    <li>₹40 flat shipping for orders below ₹299</li>
+                    <li>Same rates apply across all Delhi NCR locations</li>
                   </ul>
                 </div>
 
@@ -110,30 +110,32 @@ const Policies = () => {
                 <div>
                   <h3 className="font-semibold mb-2">Medicines</h3>
                   <p className="text-muted-foreground">
-                    Standard delivery time is 2-5 business days depending on your location. Metro cities usually receive orders within 2-3 days.
+                    Instant delivery: 10-15 minutes (Delhi NCR)<br />
+                    Express delivery: Within 1 hour<br />
+                    All deliveries tracked in real-time
                   </p>
                 </div>
 
                 <div>
                   <h3 className="font-semibold mb-2">Lab Test Kits</h3>
                   <p className="text-muted-foreground">
-                    Home test kits are delivered within 1-3 business days. Sample collection is scheduled within 24-48 hours of booking.
+                    Sample collection scheduled within 2 hours of booking. Test reports delivered digitally within specified duration (varies by test type).
                   </p>
                 </div>
 
                 <div>
                   <h3 className="font-semibold mb-2">Tracking</h3>
                   <p className="text-muted-foreground">
-                    You will receive a tracking number via SMS and email once your order is shipped. Track your order in real-time through our website or the courier partner's platform.
+                    Real-time tracking available for all orders. You'll receive live updates via SMS and in-app notifications throughout the delivery process.
                   </p>
                 </div>
 
                 <div>
-                  <h3 className="font-semibold mb-2">Delivery Attempts</h3>
+                  <h3 className="font-semibold mb-2">Delivery Coverage</h3>
                   <ul className="list-disc list-inside space-y-2 text-muted-foreground">
-                    <li>Up to 3 delivery attempts will be made</li>
-                    <li>SMS/Call notification before each attempt</li>
-                    <li>Order returned if undelivered after 3 attempts</li>
+                    <li>10-15 min delivery across all Delhi NCR areas</li>
+                    <li>Includes: New Delhi, Gurgaon, Noida, Faridabad, Ghaziabad</li>
+                    <li>Contact support for specific locality confirmation</li>
                   </ul>
                 </div>
               </div>
@@ -214,14 +216,14 @@ const Policies = () => {
                 <div>
                   <h3 className="font-semibold mb-2">Lab Test Bookings</h3>
                   <p className="text-muted-foreground">
-                    Lab bookings can be cancelled up to 12 hours before the scheduled sample collection time. Full refund will be processed.
+                    Lab bookings can be cancelled up to 2 hours before the scheduled sample collection time. Full refund will be processed instantly.
                   </p>
                 </div>
 
                 <div>
                   <h3 className="font-semibold mb-2">Doctor Appointments</h3>
                   <p className="text-muted-foreground">
-                    Appointments can be cancelled up to 6 hours before the scheduled time. Cancellations made within 6 hours are subject to a 50% cancellation fee.
+                    Appointments can be cancelled up to 4 hours before the scheduled time. Cancellations made within 4 hours are subject to a 30% cancellation fee.
                   </p>
                 </div>
 
@@ -258,17 +260,19 @@ const Policies = () => {
                     <div className="p-4 border rounded-lg">
                       <h4 className="font-medium mb-2">Online Payment</h4>
                       <ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground">
-                        <li>Credit Cards (Visa, Mastercard, Amex)</li>
-                        <li>Debit Cards</li>
-                        <li>Net Banking</li>
-                        <li>UPI (Google Pay, PhonePe, Paytm)</li>
-                        <li>Digital Wallets</li>
+                        <li>Razorpay Gateway</li>
+                        <li>PayPal</li>
+                        <li>Credit Cards (Visa, Mastercard, Amex, RuPay)</li>
+                        <li>Debit Cards (All major banks)</li>
+                        <li>Net Banking (150+ banks)</li>
+                        <li>UPI (Google Pay, PhonePe, Paytm, BHIM)</li>
+                        <li>Digital Wallets (Paytm, Mobikwik, Freecharge)</li>
                       </ul>
                     </div>
                     <div className="p-4 border rounded-lg">
                       <h4 className="font-medium mb-2">Cash on Delivery</h4>
                       <p className="text-sm text-muted-foreground">
-                        Available for orders below ₹2000. Additional ₹30 COD fee applicable.
+                        Available for orders below ₹5000 across Delhi NCR. No additional COD charges for instant delivery orders.
                       </p>
                     </div>
                   </div>
@@ -277,7 +281,7 @@ const Policies = () => {
                 <div>
                   <h3 className="font-semibold mb-2">Payment Security</h3>
                   <p className="text-muted-foreground">
-                    All online transactions are secured with 256-bit SSL encryption. We use Razorpay payment gateway, which is PCI DSS compliant.
+                    All online transactions are secured with 256-bit SSL encryption. We use Razorpay and PayPal payment gateways, both PCI DSS Level 1 compliant. Your card details are never stored on our servers.
                   </p>
                 </div>
 
